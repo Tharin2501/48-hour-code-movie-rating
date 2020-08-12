@@ -1,4 +1,4 @@
-# Movie rating web application
+# 48-hour code: Movie rating application
 
 This web application is a a movie rating website like IMDb.
 The application shows a list of movies, where logged-in users can star (1 to 5) them, and write short reviews.
