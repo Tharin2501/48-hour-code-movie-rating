@@ -1,0 +1,27 @@
+.blackBg {
+    background-color: grey;
+}
+
+.whiteText {
+    color: white;
+}
+
+.yellowText {
+    color: gold;
+    height: 40px;
+}
+
+.redText {
+    color: darkred;
+}
+
+.detailsBtn {
+    height: 25px;
+    background-color: midnightblue;
+    border-radius: 3px;
+    border-color: midnightblue;
+    margin: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    color: royalblue;
+}

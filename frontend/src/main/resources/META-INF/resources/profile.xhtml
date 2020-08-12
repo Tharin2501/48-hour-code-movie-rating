@@ -1,0 +1,52 @@
+<ui:composition template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:sec="http://www.springframework.org/security/tags">
+
+    <ui:define name="title">Profile</ui:define>
+    <ui:define name="content">
+
+        <sec:authorize access="isAuthenticated()">
+
+            <h2>Profile page</h2>
+
+            <h:outputLabel value="email:"/>
+            <h:outputText id="profileEmail" value="#{userController.email}"/>
+            <br/>
+
+            <h:outputLabel value="full name:"/>
+            <h:outputText id="profileFullName" value="#{userController.fullName}"/>
+            <br/>
+
+            <h:outputLabel value="Rank-count:"/>
+            <h:outputText id="profileRankCount" value="#{userController.rankCount}"/>
+
+            <h3>Update user details:</h3>
+            <h:form prependId="false">
+
+                <h:outputLabel value="Name:"/>
+                <h:inputText id="profileInputGivenName" value="#{userController.currentName}"/>
+                <br/>
+
+                <h:outputLabel value="Last Name:"/>
+                <h:inputText id="profileInputFamilyName" value="#{userController.currentLastName}"/>
+                <br/>
+
+                <h:commandButton
+                        id="profileUpdateUserButton"
+                        action="#{userController.update}"
+                        value="Update user details"
+                        class="btn btn-secondary"/>
+
+                <h:outputLabel
+                        id="updateUserError"
+                        value="You have to enter both name- and last name."
+                        rendered="${!empty param['error']}"/>
+            </h:form>
+            <br/>
+
+        </sec:authorize>
+    </ui:define>
+
+</ui:composition>
+

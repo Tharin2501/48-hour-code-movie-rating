@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>pg5100_705010_exam</artifactId>
+        <groupId>no.kristiania</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>backend</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+
+    <dependencies>
+        <!-- JSF-->
+        <dependency>
+            <groupId>org.joinfaces</groupId>
+            <artifactId>jsf-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+
+        <!-- SPRING-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- spring-boot-starter-test -> under TESTING in root pom-->
+        <!-- DATABASE -->
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <!-- make sure that h2 is in test scope-->
+            <scope>test</scope>
+        </dependency>
+        <!--TESTING (selenium) -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-remote-driver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <!-- For running UNIT tests-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <rerunFailingTestsCount>3</rerunFailingTestsCount>
+                    <argLine>${argLine} -Xms512m -Xmx4096m</argLine>
+                </configuration>
+            </plugin>
+            <!-- For running INTEGRATION tests-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <rerunFailingTestsCount>3</rerunFailingTestsCount>
+                    <argLine>${argLine} -Xms512m -Xmx4096m</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

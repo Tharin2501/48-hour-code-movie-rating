@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:sec="http://www.springframework.org/security/tags"
+>
+
+<head>
+    <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="plot" content=""/>
+    <meta name="author" content=""/>
+
+    <link rel="stylesheet" href="/assets/style.css"/>
+
+    <title>
+        <ui:insert name="title">Default title</ui:insert>
+    </title>
+
+</head>
+
+<body class="blackBg">
+<h1 class="yellowText">IMDB</h1>
+
+<h:button id="goHomeButton" outcome="/index.jsf" value="Go home"/>
+
+<sec:authorize access="hasAuthority('ADMIN')">
+    <h:button id="goToAdminPageButton" outcome="/admin.jsf" value="Admin page"/>
+</sec:authorize>
+
+<sec:authorize access="isAuthenticated()">
+    <h:button id="goToProfilePageButton" outcome="/profile.jsf" value="Profile page"/>
+</sec:authorize>
+
+<sec:authorize access="isAnonymous()">
+    <h:button id="loginBtnId" outcome="/login.jsf" value="Log In"/>
+    <h:button id="signupBtnId" outcome="/signup.jsf" value="Sign Up"/>
+</sec:authorize>
+
+<hr/>
+
+<ui:insert name="content">Default content</ui:insert>
+
+<div class="fixed-bottom">
+    <sec:authorize access="isAuthenticated()">
+        <form action="/logout" class="form">
+            <input value="Log out" type="submit" id="logoutBtnId"/>
+        </form>
+
+        <div class="whiteText">Thank you for visiting! <h:outputText value="#{userController.email}"/>.</div>
+    </sec:authorize>
+    <sec:authorize access="isAnonymous()">
+        <div class="whiteText">Thanks you for visiting! guest</div>
+    </sec:authorize>
+</div>
+
+</body>
+</html>

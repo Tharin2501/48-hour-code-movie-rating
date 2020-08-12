@@ -1,0 +1,94 @@
+<ui:composition template="./layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:sec="http://www.springframework.org/security/tags" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:define name="title">Movie</ui:define>
+    <ui:define name="content">
+
+        <c:set var="id" value="#{param['movieId']}"/>
+        <c:set var="movie" value="#{movieController.getMovie(id)}"/>
+
+        <h1 id="itemHeader"> #{movie.title} - Item details</h1>
+        <h:outputText value="#{movie.plot}"/>
+        <br/>
+        <h:outputText id="itemRating" value="Rating: #{rankController.getAvarageRank(movie.id)} based on #{rankController.getGetRateCountOf(movie.id)} users."/>
+        <br/>
+
+        <sec:authorize access="isAuthenticated()">
+
+
+            <h2>Give your rating:</h2>
+            <h:outputText
+                    id="itemScore"
+                    value="Your current rating: #{rankController.getCurrentRank(movie.id)}"
+                    rendered="#{rankController.hasRanked(movie.id)}"/>
+
+            <h:form id="scoreForm" prependId="false">
+                <input type="hidden" name="movieId" value="#{param['movieId']}" />
+                <c:set var="movieId" value="#{param['movieId']}"/>
+                <p:commandButton value="1" action="#{rankController.setNewRank(1, movieId)}"/>
+                <p:commandButton value="2" action="#{rankController.setNewRank(2, movieId)}"/>
+                <p:commandButton value="3" action="#{rankController.setNewRank(3, movieId)}"/>
+                <p:commandButton value="4" action="#{rankController.setNewRank(4, movieId)}"/>
+                <p:commandButton value="5" action="#{rankController.setNewRank(5, movieId)}"/>
+            </h:form>
+
+
+            <h2>Add/Update a review to your rating</h2>
+
+            <c:choose>
+                <c:when test="${rankController.hasRanked(movie.id)}">
+
+                    <h:form id="removeRankForm" prependId="false">
+                        <input type="hidden" name="movieId" value="#{param['movieId']}" />
+                        <c:set var="movieId" value="#{param['movieId']}"/>
+                        <h:commandButton
+                                id="removeRankButton"
+                                action="#{rankController.removeRank(movieId)}"
+                                value="Remove your rank"
+                        />
+                    </h:form>
+                    <br/>
+
+                    <h:form id="commentForm" prependId="false">
+                        <input type="hidden" name="movieId" value="#{param['movieId']}" />
+                        <c:set var="movieId" value="#{param['movieId']}"/>
+                        <h:outputLabel value="title:"/>
+                        <h:inputText id="commentFormTitle" value="#{reviewController.currentTitle}"/>
+                        <br/>
+
+                        <h:outputLabel value="content:"/>
+                        <h:inputTextarea id="commentFormContent" value="#{reviewController.currentContent}"/>
+                        <br/>
+
+                        <h:commandButton id="reviewFormButton" value="Post Review" action="#{reviewController.createNewReview(movieId)}"/>
+                        <h:outputLabel
+                                id="commentError"
+                                value="Comment failed. Make sure to have content in both boxes."
+                                rendered="${!empty param['error']}"/>
+                    </h:form>
+                </c:when>
+                <c:otherwise>
+                    <br/>
+                    You must rank the movie to add a review.
+                    <br/>
+                </c:otherwise>
+            </c:choose>
+        </sec:authorize>
+
+        <div id="itemComments">
+            <ui:repeat value="#{reviewController.getReviewByMovie(movie.id)}" var="review">
+                <div class="itemComment">
+                    <h3>#{review.title} - #{review.rank.rating}</h3>
+                    <h:outputText value="#{review.content}"/> <br/>
+                    <h:outputText value="- #{review.rank.rankId.user.email}"/>
+                </div>
+            </ui:repeat>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<ui:composition template="/layout.xhtml">
+
+    <ui:define name="title">IMDB: Ratings, Reviews and Where to watch the best movies</ui:define>
+    <ui:define name="content">
+
+        <h2 class="yellowText">Browse Movies By Genre</h2>
+
+        <sec:authorize access="isAuthenticated()">
+            <h2 class="yellowText">Welcome, #{userController.fullName}</h2>
+        </sec:authorize>
+
+
+        <div>
+            <c:set var="genres" value="${movieController.allCategories}"/>
+
+            <h:form prependId="false">
+                <h:selectOneMenu id="categorySelect" value="#{movieController.selectedGenre}">
+                    <f:selectItem itemLabel="Select a genre..." />
+                    <f:selectItems value="#{genres}" var="genre" itemLabel="#{genre}" itemValue="#{genre}"/>
+                </h:selectOneMenu>
+                <h:commandButton id="doFilter" value="Filter" action="#{movieController.filterMovies}"/> <!-- was p:commandBUtton. May be relevante -->
+            </h:form>
+        </div>
+
+        <ui:repeat value="#{movieController.homePageMovies}" var="movie">
+            <div class="homeMovie">
+                <h2 class="yellowText">#{movie.title}</h2>
+                <h:outputText class="yellowText" value="#{rankController.getAvarageRank(movie.id)}"/>
+                <br></br>
+                <h:outputText value="#{movie.plot}" class="whiteText"/> <br/>
+                <br></br>
+                <h:outputText value="#{movie.director}" class="whiteText"/> <br/>
+                <h:outputText value="#{movie.yearOfRelease}" class="whiteText"/> <br/>
+                <br></br>
+                <h:form>
+                    <h:commandButton
+                            value="More details"
+                            action="#{movieController.goToMoviePage(movie.id)}"
+                            class="detailsBtn"/>
+                </h:form>
+                <hr/>
+            </div>
+        </ui:repeat>
+    </ui:define>
+
+</ui:composition>
+
+</html>
