@@ -29,10 +29,12 @@ This application is split in 3 maven submodules.
 
     report: for aggregated JaCoCo report, and for the OWASP dependency check report.
 
-##Entrypoint
+## Entrypoint
 
-LocalApplicationRunner.java : /backend/src/test/java/no/kristiania/backend/ LocalApplicationRunner.java
-How to Run
+LocalApplicationRunner.java : 
+- /backend/src/test/java/no/kristiania/backend/ LocalApplicationRunner.java
+
+## How to Run Application
 
     mvn clean install to build the application (with tests)
     mvn package - DskipTests (without tests)
@@ -41,7 +43,7 @@ How to Run
 
     You can now access the application at localhost:8080
 
-##How to run tests
+## How to run tests
 
 This application contains both unit tests (Junit) and Integration tests (Selenium)
 
