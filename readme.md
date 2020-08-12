@@ -4,6 +4,8 @@ This web application is a a movie rating website like IMDb.
 The application shows a list of movies, where logged-in users can star (1 to 5) them, and write short reviews.
 This was part of an final exam in one of my courses at Høyskolen Kristiania.
 
+The whole project is coded in 48-hours as that was the time limit of this exam
+
 Tasks Completed: I did requirements R1, R2, R3 
 and partially R4.
 
