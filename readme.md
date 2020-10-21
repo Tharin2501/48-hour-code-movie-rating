@@ -52,13 +52,9 @@ Run from maven command: mvn clean verify
 Run from IDE: Run 'All Tests' with Coverage
 Testing Code Coverage
 
-Test coverage report at target/site/jacoco/index.html.
+Test coverage report at target/site/jacoco-aggregate/index.html.
 
-    Total coverage(backend): 26%
-
-Test coverage report at target/site/jacoco-it/index.html.
-
-    Total coverage(backend): 95 %
+    Total coverage(backend): 94 %
 
 
 R5 Extra Features
